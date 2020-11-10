@@ -30,15 +30,16 @@ void INORDER(node *root);
 void POSTORDER(node *root);
 node *inOrderSuccessor(node *root);
 node *inOrderPre(node *root);
-//void FindSuccessor(node *root);
-//void FindPre(node *root);
+void CASE1(node **root);
+void CASE2(node **root);
+void CASE3(node **root);
+void CASE4(node *root);
+void CASE5(node *root);
 
 int main() {
     node *root = NULL;
-    node *temp;
     int c = 0;
     int choice;
-    int num;
     
     while (c == 0) {
         //Menu
@@ -60,44 +61,23 @@ int main() {
                 c = 1;
                 break;
             case 1:
-                cout << "Enter number: ";
-                cin >> num;
-                INSERT(num, &root);
+                CASE1(&root);
                 c = 0;
                 break;
             case 2:
-                cout << "Enter number: ";
-                cin >> num;
-                temp = SEARCH(&root, num);
-                if (temp != NULL) {
-                    if (temp->count > 1) {
-                        cout << "Count of [" << num << ": " << temp->count - 1 << "]\n";
-                    }else cout << "The number [" << temp->data << "] is deleted.\n";
-                    DELETE(&root, num);
-                }else cout << "The item does not exist in the tree.\n";
+                CASE2(&root);
                 c = 0;
                 break;
             case 3:
-                cout << "Enter number: ";
-                cin >> num;
-                temp = SEARCH(&root, num);
-                if (temp != NULL) {
-                    cout << "\nThe no. [" << num << "] has the count of [" << temp->count << "]\n";
-                }
+                CASE3(&root);
                 c = 0;
                 break;
             case 4:
-                temp = MAXIMUM(root);
-                if (temp != NULL) {
-                    cout << "Maximum number in the tree: " << temp->data << "\n";
-                }
+                CASE4(root);
                 c = 0;
                 break;
             case 5:
-                temp = MINIMUM(root);
-                if (temp != NULL) {
-                    cout << "Minimum number in the tree: " << temp->data << "\n";
-                }
+                CASE5(root);
                 c = 0;
                 break;
             case 6:
@@ -134,8 +114,57 @@ struct node* NEWNODE (int data) {
     return newnode; //returns new node
 }
 
+//CASES---------------------------------
 
-//MAIN FUNCTIONS TO USE
+void CASE1(node **root){
+    int num;
+    cout << "Enter number: ";
+    cin >> num;
+    INSERT(num, &(*root));
+}
+
+void CASE2(node **root){
+    int num;
+    node *temp;
+    cout << "Enter number: ";
+    cin >> num;
+    temp = SEARCH(&(*root), num);
+    if (temp != NULL) {
+        if (temp->count > 1) {
+            cout << "Count of [" << num << ": " << temp->count - 1 << "]\n";
+        }else cout << "The number [" << temp->data << "] is deleted.\n";
+        DELETE(&(*root), num);
+    }else cout << "The item does not exist in the tree.\n";
+}
+
+void CASE3(node **root){
+    int num;
+    node *temp;
+    cout << "Enter number: ";
+    cin >> num;
+    temp = SEARCH(&(*root), num);
+    if (temp != NULL) {
+        cout << "\nThe no. [" << num << "] has the count of [" << temp->count << "].\n";
+    }else cout << "The number that you're looking for does not exist.";
+}
+
+void CASE4(node *root){
+    node *temp;
+    temp = MAXIMUM(root);
+    if (temp != NULL) {
+        cout << "Maximum number in the tree: " << temp->data << "\n";
+    }
+}
+
+void CASE5(node *root){
+    node *temp;
+    temp = MINIMUM(root);
+    if (temp != NULL) {
+        cout << "Minimum number in the tree: " << temp->data << "\n";
+    }
+}
+
+//MAIN FUNCTIONS TO USE-----------------------
 void INSERT(int data, node **root) {
     node *tempNode = NEWNODE(data);
     node *current;
